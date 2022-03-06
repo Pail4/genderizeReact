@@ -70,9 +70,10 @@ class Result extends React.Component {
   render() {
     if (this.props.warn) return <Warn></Warn>;
     
-    return (this.props.gender
-    ? <h1>You are {this.props.gender}?</h1>
-    : null
+    return (
+      <div>
+        {this.props.gender && <h1>You are {this.props.gender}?</h1>}
+      </div>
     )
   }
 }
