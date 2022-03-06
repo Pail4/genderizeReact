@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './App.css'
 import React from 'react'
 
@@ -46,15 +47,33 @@ class Button extends React.Component {
   }
 }
 
-
-class Result extends React.Component {
-
+class Warn extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    return <h1>You are {this.props.gender}?</h1>;
+    return (
+      <div>
+        Your name must be atleast 2 symbols! <br /> 
+      </div>
+    )
+  }
+}
+
+
+class Result extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    if (this.props.warn) return <Warn></Warn>;
+    
+    return (this.props.gender
+    ? <h1>You are {this.props.gender}?</h1>
+    : null
+    )
   }
 }
 
@@ -67,19 +86,26 @@ class App extends React.Component {
   }
 
   setGender(name) {
+    if  (name.length < 2){
+      this.setState({warn: "Name less 2 symbols"});
+      return;
+    }
     const serverUrl = 'https://api.genderize.io';
     const url = `${serverUrl}?name=${name}`;
     fetch(url).then(response => response.json())
       .then((obj) => {
-        this.setState({ gender: obj.gender })
+        this.setState({ 
+          gender: obj.gender,
+          warn: false
+         })
       })
   }
 
   render() {
     return (
-      <div>
+      <div className='App'>
         <Form onChange={this.setGender} ></Form>
-        <Result gender={this.state.gender}></Result>
+        <Result gender={this.state.gender} warn={this.state.warn}></Result>
       </div>
     );
   }
