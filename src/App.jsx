@@ -2,6 +2,13 @@
 import './App.css'
 import React from 'react'
 
+const API = {
+  serverUrl : 'https://api.genderize.io',
+  getUrl(name){
+    return  `${this.serverUrl}?name=${name}`;
+  },
+}
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -91,8 +98,8 @@ class App extends React.Component {
       this.setState({warn: "Name less 2 symbols"});
       return;
     }
-    const serverUrl = 'https://api.genderize.io';
-    const url = `${serverUrl}?name=${name}`;
+    
+    const url = API.getUrl();
     fetch(url).then(response => response.json())
       .then((obj) => {
         this.setState({ 
