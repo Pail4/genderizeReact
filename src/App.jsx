@@ -2,88 +2,9 @@
 import './App.css'
 import React from 'react'
 
-const API = {
-  serverUrl : 'https://api.genderize.io',
-  getUrl(name){
-    return  `${this.serverUrl}?name=${name}`;
-  },
-}
-
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleNameCHange = this.handleNameCHange.bind(this);
-  }
-
-  handleNameCHange(event) {
-    event.preventDefault();
-    this.props.onChange(event.target.querySelector('input').value)
-  }
-
-  render() {
-    return (
-      <form action="" onSubmit={this.handleNameCHange}>
-        <Input></Input>
-        <Button></Button>
-      </form>
-    );
-  }
-}
-
-class Input extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <input type="text" placeholder='Who are you, sweetie?' />
-    )
-  }
-}
-
-class Button extends React.Component {
-
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <button>*touch me gently*</button>
-    )
-  }
-}
-
-class Warn extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <div>
-        Your name must be atleast 2 symbols! <br /> 
-      </div>
-    )
-  }
-}
-
-
-class Result extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    if (this.props.warn) return <Warn></Warn>;
-    
-    return (
-      <div>
-        {this.props.gender && <h1>You are {this.props.gender}?</h1>}
-      </div>
-    )
-  }
-}
+import { API } from './components/API.js'
+import { Form } from './components/Form'
+import { Result } from './components/Result'
 
 
 class App extends React.Component {
@@ -99,7 +20,7 @@ class App extends React.Component {
       return;
     }
     
-    const url = API.getUrl();
+    const url = API.getUrl(name);
     fetch(url).then(response => response.json())
       .then((obj) => {
         this.setState({ 
