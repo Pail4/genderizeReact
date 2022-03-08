@@ -4,32 +4,29 @@ import React from 'react'
 export class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.handleNameCHange = this.handleNameCHange.bind(this);
-  }
-
-  handleNameCHange(event) {
-    event.preventDefault();
-    this.props.onChange(event.target.querySelector('input').value)
   }
 
   render() {
     return (
-      <form action="" onSubmit={this.handleNameCHange}>
-        <Input></Input>
+      <form action="" onSubmit={(e) => {e.preventDefault();}}>
+        <Input value={this.props.value} onChange={this.props.onChange}></Input>
         <Button></Button>
       </form>
     );
   }
 }
 
-function Input(){
+function Input(props){
+  const handleChange = function(event){
+    props.onChange(event.target.value);
+  }
   return (
-    <input type="text" placeholder='Who are you, sweetie?' />
+    <input type="text" value={props.value} onChange={handleChange} placeholder='Who are you, sweetie?' />
   )
 }
 
 function Button(){
   return (
-    <button>*touch me gently*</button>
+    <button>*useless btn*</button>
   )
 }
